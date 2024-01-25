@@ -1,8 +1,10 @@
 
+import { useAuth } from "../../contexts/AuthContext"
 import styles from "./Login.module.css"
 
 
 export function Login(){
+    const {Email,Password,setEmail,setPassword,handleLogin} = useAuth();
     return(
         <div className={styles.main}>
             <div className={styles.LoginContainer}>
@@ -13,10 +15,10 @@ export function Login(){
                </p>
             </div>
             <div className={styles.rightContainer}>
-                <form className={styles.LoginForm}>
-                    <input className={styles.inputEmail} name="text" type="text" required/>
+                <form on onSubmit={()=>handleLogin(Email,Password)}className={styles.LoginForm}>
+                    <input onChange={(e)=>setEmail(e.target.value)} className={styles.inputEmail} name="text" type="text" value={Email} required/>
                     <label className={styles.labelEmail} htmlFor="text"><span>Email</span></label> 
-                    <input className={styles.inputPassword} name="passwordField" type="password" required/>
+                    <input onChange={(e)=>setPassword(e.target.value)} className={styles.inputPassword} name="passwordField" type="password" value={Password} required/>
                     <label className={styles.labelPassword} htmlFor="passwordField"><span>Password</span></label> 
                     <button>Login</button>
                 </form>
