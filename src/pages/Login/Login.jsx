@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { useAuth } from "../../contexts/authContext";
 import styles from "./Login.module.css"
 
 
 export function Login(){
-    const {Email,Password,setEmail,setPassword,handleLogin} = useAuth();
+    const [Email,setEmail] = useState("");
+    const [Password,setPassword] = useState("");
+    const {handleLogin} = useAuth();
     return(
         <div className={styles.main}>
             <div className={styles.LoginContainer}>

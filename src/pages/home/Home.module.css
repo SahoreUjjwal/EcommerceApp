@@ -1,0 +1,84 @@
+.container{
+    margin-top: 10px;
+    padding:5px 2% 10px 2%;
+}
+.sideBar{
+    display: inline-block;
+    margin-right: 2dvw;
+    height:600px;
+    width:20dvw;
+    border: 1px solid black;
+}
+.products{
+    display:inline-grid;
+    vertical-align: top;
+    padding:2%;
+    width:70dvw;
+    border: 1px solid black;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background-color: #fff;
+}
+.card{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:flex-start;
+    padding: 2%;
+    min-height: 250px;
+    border:1px;   
+}
+.card:hover{
+    box-shadow: 0 0 3px 2px gainsboro;
+}
+.card div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    width:100%;
+}
+.imageContainer{
+    background-color:#fff;
+    border-radius: 0.3rem;
+}
+.favouriteLiked{
+    position: absolute;
+    right:5px;
+    top:5px;
+    color: rgb(223, 44, 44);
+}
+.favourite{
+    position: absolute;
+    right:5px;
+    top:5px;
+    color: rgb(173, 147, 147);
+}
+.card img{
+    position: relative;
+    width:100px;
+    height:100px;
+    object-fit: contain;
+}
+.card p{
+    padding:3px;
+    margin:2px;
+    font-size: 0.8rem;;
+}
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f2f4;
+    height: 40px;
+}
+.AddCartButton{
+    padding:4px;
+    height:30px;
+    border-radius: 0.3rem;
+    background-color:#2874f0;
+    box-shadow: 0 0 1px 1px #2874f0;
+    font-weight: 400;
+    color: #fff;
+    border: none;
+}

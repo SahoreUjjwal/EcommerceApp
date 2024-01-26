@@ -1,12 +1,12 @@
 .navComponent{
-    width:100dvw;
+    
     height:80px;
-    background-color: #fff  ;
+    background-color: #fff;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-inline:5%;
+    padding-inline: 5%;
 }
 
 .ecomIcon{
@@ -25,7 +25,7 @@
     display: flex;
     width:60%;
     height: 40px;   
-    border-radius: 1rem;
+    
     align-items: center;
     padding-inline:10px;
     gap:0.2rem;
@@ -74,15 +74,18 @@
 .loginDropdownShow{
     position: absolute;
     display:flex;
+    vertical-align:baseline;
     width:250px;
     flex-direction: column;
-    transform: translate(-10px,85px);
+    transform: translateY(calc(50% + 20px));
     background-color: #fff;
     box-shadow: 0px 5px 5px 2px #f1f2f4;
+    z-index: 2;
 }
 .loginDropdownHidden{
     position: absolute;
     visibility: hidden;
+    
 }
 .loginDropdownShow >div{
     display: flex;

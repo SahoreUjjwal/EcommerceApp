@@ -4,32 +4,52 @@ import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom"
 import { SignUp } from "./pages/SignUp/SignUp";
 import { ToastContainer } from "react-toastify";
 import {useAuth} from "./contexts/authContext";
-
+import { Home } from "./pages/home/Home";
+import { Cart } from "./pages/cart/Cart";
 
 function App() {
   const {user} = useAuth();
-  const Privateroute=({children})=>{
+  const LoginPrivateroute=({children})=>{
     if(user){
         return <Navigate to="/" replace={true}/>
     }
     return children;
   }
+  const loggedInRoutes=({children})=>{
+    if(!user){
+      return <Navigate to="/Login" replace={true}/>
+  }
+   return children;
+  }
+
   const routes = createBrowserRouter([
     {
       path:"/",
       element:<Navbar/>,
       children:[
+        {
+            index:true,element:(
+              <Home/>
+            )
+        },
         {path:"Login" , element:(
-            <Privateroute>
+            <LoginPrivateroute>
               <Login/>
-            </Privateroute>     
+            </LoginPrivateroute>     
           )},
           {
             path:"SignUp" , element:(
-              <Privateroute>
+              <LoginPrivateroute>
                 <SignUp/>
-              </Privateroute>   
+              </LoginPrivateroute>   
             ) 
+          },
+          {
+            path:"cart",element:(
+              <loggedInRoutes>
+                <Cart/>
+              </loggedInRoutes>  
+            )
           }
       ]
     }
