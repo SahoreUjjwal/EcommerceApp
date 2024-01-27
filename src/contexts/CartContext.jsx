@@ -9,6 +9,7 @@ export const useCart = ()=>{
 
 const CartContext =({children})=>{
     let [items,setItems] = useState([]);
+    const [totalItems,setTotalItems] = useState(0);
     const addTocart=async(user,product)=>{
         const exists = items.findIndex((item)=>item.product.id ===product.id);
         if(exists!=-1){
@@ -19,6 +20,7 @@ const CartContext =({children})=>{
             await updateDoc(cartDoc, {
                 items:items
             });
+            setTotalItems(totalItems+1);
             setItems(items);
         }
         else{
@@ -37,13 +39,26 @@ const CartContext =({children})=>{
                 await updateDoc(cartDoc, {
                     items:items
                 });
-                setItems(items);
+                
             }
+            setTotalItems(totalItems+1);
+            setItems(items);
         }
         
     }
+    const getItemsDB=async(user)=>{
+        const q = query(collection(db, "cart"), where("user", "==", user.uid));
+        const querySnapshot = await getDocs(q);
+        if(querySnapshot.docs[0]!=null){
+            console.log(querySnapshot.docs[0].data().items);
+            setItems(querySnapshot.docs[0].data().items);
+            const totalItems = querySnapshot.docs[0].data().items.reduce((total,curr)=>total+curr.count,0,);
+            setTotalItems(totalItems);
+            }
+        };
+    
     return(
-            <cartContext.Provider value={{items,setItems,addTocart}}>
+            <cartContext.Provider value={{items,setItems,addTocart,getItemsDB,totalItems}}>
                 {children}
             </cartContext.Provider>
     )

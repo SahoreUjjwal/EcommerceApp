@@ -15,7 +15,7 @@ function App() {
     }
     return children;
   }
-  const loggedInRoutes=({children})=>{
+  const LoggedInRoutes=({children})=>{
     if(!user){
       return <Navigate to="/Login" replace={true}/>
   }
@@ -46,9 +46,9 @@ function App() {
           },
           {
             path:"cart",element:(
-              <loggedInRoutes>
+              <LoggedInRoutes>
                 <Cart/>
-              </loggedInRoutes>  
+              </LoggedInRoutes>  
             )
           }
       ]
