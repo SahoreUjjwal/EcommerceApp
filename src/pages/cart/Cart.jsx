@@ -5,21 +5,24 @@ import styles from "./Cart.module.css";
 import { useEffect,useState } from "react";
 import { useAuth } from "../../contexts/authContext";
 export function Cart(){
-    const {items,totalItems} = useCart();
+    const {items,totalItems,increaseCount,decreaseCount,getItemsDB,placeOrder} = useCart();
     const {user} = useAuth();
     const [totalPrice,setTotalPrice] = useState(0);
     useEffect(()=>{
         if(user){
-            const total = items.reduce((total,curr)=>total+curr.product.price*curr.count,0,);
+            if(user){
+                getItemsDB(user);
+            }
+            // const total = items.reduce((total,curr)=>total+curr.product.price*curr.count,0,);
 
-            setTotalPrice(total);
+            // setTotalPrice(total);
         }
-    })
+    },[])
     return (
         <>
             <div className={styles.classWrapper}>
                 <div className={styles.cartContainer}>
-                    {items.map((item)=>(
+                    {items && items.map((item)=>(
                         <div className={styles.cartItem}>
                             <div className={styles.imageContainer}>
                                 <img src={item.product.image} alt={item.product.title} />
@@ -29,15 +32,15 @@ export function Cart(){
                                 <p><span>Category </span><span>{item.product.category}</span></p>
                                 <p><span>Price </span><span>{item.product.price}</span></p>
                                 <div className={styles.increaseDecreaseButton}>
-                                    <FontAwesomeIcon icon={faPlus} />
+                                    <FontAwesomeIcon onClick={()=>{decreaseCount(user,item)}} icon={faMinus} />
                                     <span className={styles.countSpan}>{item.product.count}</span>
-                                    <FontAwesomeIcon icon={faMinus} />
+                                    <FontAwesomeIcon onClick={()=>{increaseCount(user,item)}} icon={faPlus} />
                                 </div>
                             </div>
                         </div>
                     ))}
                     <div className={styles.PlaceOrder}>
-                        <button>
+                        <button onClick={()=>placeOrder(user)}>
                             Place Order
                         </button>
                     </div>

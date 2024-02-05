@@ -21,32 +21,6 @@
     object-fit: contain;
    
 }
-.formContainer{
-    display: flex;
-    width:60%;
-    height: 40px;   
-    
-    align-items: center;
-    padding-inline:10px;
-    gap:0.2rem;
-    background-color:#f1f2f4;
-    border: 2px solid transparent;
-}
-.formContainer:hover{
-    border:2px solid #2874f0;
-}
-.formContainer > form{
-    width:100%;
-}
-
-.input{
-    width:100%;
-    font-size: 1.2rem;
-    border-radius: 0.25rem;
-    background-color:#f1f2f4;
-    border: none;
-    outline: none;
-}
 
 .login{
     display: flex;

@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword,
-    signInWithEmailAndPassword } from 'firebase/auth';
+    signInWithEmailAndPassword, 
+    onAuthStateChanged,
+    signOut} from 'firebase/auth';
 import {app} from "../assets/config/firestore";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -20,10 +22,13 @@ export default function AuthContext({children}){
     const [ConfirmPassword,setConfirmPassword] = useState("");
     const [user,setUser] = useState(null);
     const [cart,setCart] =useState([]);
-
+    onAuthStateChanged(auth,(user)=>{
+        setUser(user);
+    })
     const logout=(e)=>{
         e.preventDefault();
-            setUser(null);
+        e.stopPropagation();
+        signOut(auth);
     }
     const handleLogin=async(e,email,password)=>{
         e.preventDefault();
@@ -50,6 +55,7 @@ export default function AuthContext({children}){
                 console.log(response);
                 if(response)
                 {   
+
                     console.log("user created");
                 }
                 } catch (error) {
@@ -58,9 +64,7 @@ export default function AuthContext({children}){
                 }
             }
 
-    const addCart=(product)=>{
-            //uid,product,
-    }
+   
 
 
     return(

@@ -1,0 +1,53 @@
+.orderContainer{
+    display: flex;
+    width:80%;
+    margin-inline: auto;
+    flex-direction: column;
+    padding: 5%;
+    margin-top: 1%;
+    gap:0.5rem;
+}
+.orderItem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: #fff;
+    padding:2%;
+}
+.imageContainer{
+    width:15%;
+    height:70px;
+    
+}
+.imageContainer img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.orderDetails{
+    display: flex;
+    width:70%;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.orderDetails div{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.orderDetails div :nth-child(2)
+{
+    margin-block: auto;
+}
+.itemDescription p{
+    margin:0;
+}
+.itemDescription :nth-child(1){
+    font-family: sans-serif;
+    font-weight: 400;
+    margin-bottom: 3px;
+}
+
+.itemDescription :nth-child(2){
+    color:gray;
+}

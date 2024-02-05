@@ -6,7 +6,7 @@ import { useCart } from "../../contexts/CartContext";
 import { useAuth } from "../../contexts/authContext";
 import {  useNavigate } from "react-router-dom";
 export function Home(){
-    const {addTocart,getItemsDB} = useCart();
+    const {addTocart} = useCart();
     const [products,setProducts]=useState([]);
     const navigate = useNavigate();
     const {user} = useAuth();
@@ -16,9 +16,7 @@ export function Home(){
             const productsJson = await products.json();
             setProducts(productsJson);
         }
-        if(user){
-            getItemsDB(user);
-        }
+        
         fetchProducts();
     },[])
     const onAddCart=(user,product)=>{

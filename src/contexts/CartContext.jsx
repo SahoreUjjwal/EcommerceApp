@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react"
-import { collection, addDoc,query ,getDocs,where,doc,updateDoc} from "firebase/firestore"; 
+import { collection, addDoc,setDoc,query,getDoc ,getDocs,where,doc,updateDoc,arrayUnion } from "firebase/firestore"; 
 import { db } from "../assets/config/firestore";
 const cartContext  = createContext();
 export const useCart = ()=>{
@@ -46,6 +46,38 @@ const CartContext =({children})=>{
         }
         
     }
+
+    const increaseCount=async(user,item)=>{
+        const index = items.findIndex((i)=>i.product.id == item.product.id);
+        items[index].count+=1;
+        const q = query(collection(db, "cart"), where("user", "==", user.uid));
+            const querySnapshot = await getDocs(q);
+            const cartDoc = doc(db, "cart", querySnapshot.docs[0].id);
+            await updateDoc(cartDoc, {
+                items:items
+            });
+        setTotalItems(totalItems+1);
+        setItems(items);
+      
+    }
+    const decreaseCount=async(user,item)=>{
+        const index = items.findIndex((i)=>i.product.id == item.product.id);
+        if(items[index].count==1)
+        {
+            items.splice(index,1);
+        }
+        else{
+            items[index].count-=1;
+        }   
+        const q = query(collection(db, "cart"), where("user", "==", user.uid));
+            const querySnapshot = await getDocs(q);
+            const cartDoc = doc(db, "cart", querySnapshot.docs[0].id);
+            await updateDoc(cartDoc, {
+                items:items
+            });
+        setTotalItems(totalItems-1);
+        setItems(items);
+    }
     const getItemsDB=async(user)=>{
         const q = query(collection(db, "cart"), where("user", "==", user.uid));
         const querySnapshot = await getDocs(q);
@@ -56,9 +88,28 @@ const CartContext =({children})=>{
             setTotalItems(totalItems);
             }
         };
+    const placeOrder=async(user)=>{
     
+        const docRef = doc(db, "orders",user.uid);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists())
+            {
+                await updateDoc(docRef, {
+                    orders: arrayUnion({items,orderDate:new Date()})
+                });
+                setItems([]);
+            }
+        else{
+            await setDoc(doc(db, "orders", user.uid),{orders: [{
+                items,
+                orderDate:new Date()
+        }]});
+        }
+        setTotalItems(0);
+        setItems(0);
+    }
     return(
-            <cartContext.Provider value={{items,setItems,addTocart,getItemsDB,totalItems}}>
+            <cartContext.Provider value={{items,setItems,addTocart,getItemsDB,totalItems,decreaseCount,increaseCount,placeOrder}}>
                 {children}
             </cartContext.Provider>
     )

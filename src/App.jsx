@@ -6,7 +6,8 @@ import { ToastContainer } from "react-toastify";
 import {useAuth} from "./contexts/authContext";
 import { Home } from "./pages/home/Home";
 import { Cart } from "./pages/cart/Cart";
-
+import { Orders } from "./pages/orders/Orders";
+import   { ProductDetails} from "./pages/product/ProductDetails";  
 function App() {
   const {user} = useAuth();
   const LoginPrivateroute=({children})=>{
@@ -31,6 +32,10 @@ function App() {
             index:true,element:(
               <Home/>
             )
+        },{
+          path:"product/:id",element:(
+            <ProductDetails/>
+          )
         },
         {path:"Login" , element:(
             <LoginPrivateroute>
@@ -50,6 +55,11 @@ function App() {
                 <Cart/>
               </LoggedInRoutes>  
             )
+          },
+          {
+            path:"orders",
+            element:<Orders/>
+           
           }
       ]
     }
