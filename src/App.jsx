@@ -8,8 +8,23 @@ import { Home } from "./pages/home/Home";
 import { Cart } from "./pages/cart/Cart";
 import { Orders } from "./pages/orders/Orders";
 import   { ProductDetails} from "./pages/product/ProductDetails";  
+import { app } from "./assets/config/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { authSelector } from "./reducers/authReducer";
+import { useDispatch, useSelector  } from "react-redux";
+import { authActions } from "./reducers/authReducer";
+import { useEffect } from "react";
 function App() {
-  const {user} = useAuth();
+  const {user} = useSelector(authSelector);
+  const auth = getAuth(app);
+  const dispatch = useDispatch();
+  const {setUser} =authActions;
+  
+  //  onAuthStateChanged(auth,(user)=>{
+  //             console.log("hi")
+  //         const userJson= user.toJSON();
+  //         dispatch(setUser(userJson))  
+  //     })
   const LoginPrivateroute=({children})=>{
     if(user){
         return <Navigate to="/" replace={true}/>

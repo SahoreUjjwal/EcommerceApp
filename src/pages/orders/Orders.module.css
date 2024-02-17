@@ -14,6 +14,14 @@
     background-color: #fff;
     padding:2%;
 }
+.itemDetails{
+    display: flex;
+    justify-content:row;
+    justify-content: start;
+    align-items: center;
+    min-width:50%;
+    gap:1rem;
+}
 .imageContainer{
     width:15%;
     height:70px;
@@ -26,7 +34,7 @@
 }
 .orderDetails{
     display: flex;
-    width:70%;
+    width:50%;
     flex-direction: row;
     justify-content: space-evenly;
 }

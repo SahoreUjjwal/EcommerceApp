@@ -2,26 +2,33 @@ import { useEffect,useState } from "react";
 import styles from "./Home.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar,faHeart } from '@fortawesome/free-solid-svg-icons'
-import { useCart } from "../../contexts/CartContext";
-import { useAuth } from "../../contexts/authContext";
 import {  useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authSelector } from "../../reducers/authReducer";
+import { addTocart, getItemsDB } from "../../reducers/cartReducer";
 export function Home(){
-    const {addTocart} = useCart();
+    const dispatch = useDispatch();    
     const [products,setProducts]=useState([]);
     const navigate = useNavigate();
-    const {user} = useAuth();
+    const {user} = useSelector(authSelector);
+   
     useEffect(()=>{
         const fetchProducts =async()=>{
             const products = await fetch("https://fakestoreapi.com/products");
             const productsJson = await products.json();
             setProducts(productsJson);
+            if(user){
+
+                dispatch(getItemsDB({user}));
+            }
+            
         }
-        
         fetchProducts();
     },[])
     const onAddCart=(user,product)=>{
         if(user){
-            addTocart(user,product);
+            
+            dispatch(addTocart({user,product}));
             return;
         }
         navigate("/Login");

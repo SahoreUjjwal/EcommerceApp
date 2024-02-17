@@ -1,12 +1,18 @@
 import { useState } from "react";
-import { useAuth } from "../../contexts/authContext";
+
 import styles from "./Login.module.css"
-
-
+import { useSelector } from "react-redux";
+import { authActions } from "../../reducers/authReducer";
+import { useDispatch } from "react-redux";
+import { login } from "../../reducers/authReducer";
 export function Login(){
     const [Email,setEmail] = useState("");
     const [Password,setPassword] = useState("");
-    const {handleLogin} = useAuth();
+    const dispatch = useDispatch();
+    const handleLogin=(e,email,password)=>{
+            e.preventDefault();
+            dispatch(login({email,password}));
+        } 
     return(
         <div className={styles.main}>
             <div className={styles.LoginContainer}>

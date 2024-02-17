@@ -25,44 +25,44 @@ export default function AuthContext({children}){
     onAuthStateChanged(auth,(user)=>{
         setUser(user);
     })
-    const logout=(e)=>{
-        e.preventDefault();
-        e.stopPropagation();
-        signOut(auth);
-    }
-    const handleLogin=async(e,email,password)=>{
-        e.preventDefault();
-        try {
-                const response=await signInWithEmailAndPassword(auth, email, password);
-                if(response)
-                {   
-                    console.log(response);
-                    setUser(response.user) ;
-                }
-                } catch (error) {
+    // const logout=(e)=>{
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    //     signOut(auth);
+    // }
+    // const handleLogin=async(e,email,password)=>{
+    //     e.preventDefault();
+    //     try {
+    //             const response=await signInWithEmailAndPassword(auth, email, password);
+    //             if(response)
+    //             {   
+    //                 console.log(response);
+    //                 setUser(response.user) ;
+    //             }
+    //             } catch (error) {
                    
-                    return;
-                 }
-            } 
-    const handleSignUp = async(e,email,password,confirmPassword)=>{
-        e.preventDefault();
-        if(password != confirmPassword){
-            console.log("passwords dont match");
-            return;
-        }   
-        try {
-                const response=await createUserWithEmailAndPassword(auth, email, password);
-                console.log(response);
-                if(response)
-                {   
+    //                 return;
+    //              }
+    //         } 
+    // const handleSignUp = async(e,email,password,confirmPassword)=>{
+    //     e.preventDefault();
+    //     if(password != confirmPassword){
+    //         console.log("passwords dont match");
+    //         return;
+    //     }   
+    //     try {
+    //             const response=await createUserWithEmailAndPassword(auth, email, password);
+    //             console.log(response);
+    //             if(response)
+    //             {   
 
-                    console.log("user created");
-                }
-                } catch (error) {
-                    console.log(error);
-                        return;
-                }
-            }
+    //                 console.log("user created");
+    //             }
+    //             } catch (error) {
+    //                 console.log(error);
+    //                     return;
+    //             }
+    //         }
 
    
 

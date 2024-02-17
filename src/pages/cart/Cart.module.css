@@ -44,11 +44,13 @@
     right:10%;
     flex-direction: row;
     justify-content: flex-end;
+    align-items: center;
     gap:0.5rem;
  }
  .countSpan{
     min-width:40px;
     padding:2%;
+
  }
  .totalContainer{
     display: flex;

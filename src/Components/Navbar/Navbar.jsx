@@ -4,17 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass,faUser,faCartShopping,faCaretDown,faIdCard,faBox,faHeart,faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from "react";
 import {Outlet,Link, NavLink} from "react-router-dom";
-import { useAuth } from "../../contexts/authContext";
-import { useCart } from "../../contexts/CartContext";
+import { authSelector } from "../../reducers/authReducer";
 import { Searchbar } from "../Searchbar/Searchbar";
-
+import { useSelector } from "react-redux";
+import { cartSelector } from "../../reducers/cartReducer";
+import { logout } from "../../reducers/authReducer";
+import { useDispatch } from "react-redux";
 export function Navbar(){
-    const {user,logout} = useAuth();
+    const {user} = useSelector(authSelector);
+
     const[display,setDisplay] = useState(false);
     const [count,setCount] = useState();
-    const {items,setItems} =useCart();
+    const {items} =useSelector(cartSelector);
     const displayMenu=()=>{
         setDisplay(!display);
+    }
+    function logoutUser(e){
+        e.stopPropagation();
+        dispatch(logout());
     }
     useEffect(()=>{
         const countCart=()=>{
@@ -38,7 +45,7 @@ export function Navbar(){
                         {user?
                             <>
                                 <div><FontAwesomeIcon icon={faIdCard} /><span>Profile</span></div>
-                                <div onClick={(e)=>{logout(e)}}><FontAwesomeIcon icon={faIdCard} /><span>logout</span></div>
+                                <div onClick={(e)=>{logoutUser(e)}}><FontAwesomeIcon icon={faIdCard} /><span>logout</span></div>
                             </>
                             :<>
                                 <div className={styles.newCustomer}>
@@ -52,7 +59,7 @@ export function Navbar(){
                                 </div>
                             </>
                         }
-                        <Link to="orders"><div><FontAwesomeIcon icon={faBox} /><span> Orders</span></div></Link>
+                        <NavLink className={styles.navDropdown} to="orders"><FontAwesomeIcon icon={faBox} /><span> Orders</span></NavLink>
                         <div><FontAwesomeIcon icon={faHeart} /><span>Wishlist</span></div>       
                     </div>
                 </div>

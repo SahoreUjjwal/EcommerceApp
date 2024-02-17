@@ -1,17 +1,21 @@
-import {useCart} from "../../contexts/CartContext";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons'
 import styles from "./Cart.module.css";
 import { useEffect,useState } from "react";
-import { useAuth } from "../../contexts/authContext";
+
+import { cartSelector, getItemsDB,placeOrder,increaseCount,decreaseCount } from "../../reducers/cartReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { authSelector } from '../../reducers/authReducer';
 export function Cart(){
-    const {items,totalItems,increaseCount,decreaseCount,getItemsDB,placeOrder} = useCart();
-    const {user} = useAuth();
+    const dispatch = useDispatch();
+    const {items,totalItems} = useSelector(cartSelector); 
+    const {user} = useSelector(authSelector);
     const [totalPrice,setTotalPrice] = useState(0);
     useEffect(()=>{
         if(user){
             if(user){
-                getItemsDB(user);
+                dispatch(getItemsDB({user}));
             }
             // const total = items.reduce((total,curr)=>total+curr.product.price*curr.count,0,);
 
@@ -32,15 +36,15 @@ export function Cart(){
                                 <p><span>Category </span><span>{item.product.category}</span></p>
                                 <p><span>Price </span><span>{item.product.price}</span></p>
                                 <div className={styles.increaseDecreaseButton}>
-                                    <FontAwesomeIcon onClick={()=>{decreaseCount(user,item)}} icon={faMinus} />
-                                    <span className={styles.countSpan}>{item.product.count}</span>
-                                    <FontAwesomeIcon onClick={()=>{increaseCount(user,item)}} icon={faPlus} />
+                                    <FontAwesomeIcon onClick={()=>{dispatch(decreaseCount({user,item}))}} icon={faMinus} />
+                                    <span className={styles.countSpan}>{item.count}</span>
+                                    <FontAwesomeIcon onClick={()=>{dispatch(increaseCount({user,item}))}} icon={faPlus} />
                                 </div>
                             </div>
                         </div>
                     ))}
                     <div className={styles.PlaceOrder}>
-                        <button onClick={()=>placeOrder(user)}>
+                        <button onClick={()=>dispatch(placeOrder({user}))}>
                             Place Order
                         </button>
                     </div>
