@@ -119,7 +119,6 @@ export const placeOrder=createAsyncThunk(
     "cart/placeOrder",
     async(args,thunkAPI)=>{
     const itemsCart =thunkAPI.getState().cartReducer.items;
-        
     const docRef = doc(db, "orders",args.user.uid);
     const docSnap = await getDoc(docRef);
     console.log('yoohoo');
@@ -127,16 +126,17 @@ export const placeOrder=createAsyncThunk(
         {
             console.log('yoohoo2');
             await updateDoc(docRef, {
-                orders: arrayUnion({itemsCart,orderDate:new Date()})
+                orders: arrayUnion({items:itemsCart,orderDate:new Date()})
             });
-            thunkAPI.dispatch(cartActions.setItems([]));
         }
     else{
         await setDoc(doc(db, "orders", args.user.uid),{orders: [{
-            itemsCart,
+            items:itemsCart,
             orderDate:new Date()
     }]});
     }
+    //update cart in firestore
+    
     thunkAPI.dispatch(cartActions.setTotalItems(0));
     thunkAPI.dispatch(cartActions.setItems([]));
 })

@@ -3,7 +3,7 @@ import {Login} from "./pages/Login/Login";
 import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { SignUp } from "./pages/SignUp/SignUp";
 import { ToastContainer } from "react-toastify";
-import {useAuth} from "./contexts/authContext";
+
 import { Home } from "./pages/home/Home";
 import { Cart } from "./pages/cart/Cart";
 import { Orders } from "./pages/orders/Orders";
@@ -16,7 +16,7 @@ import { authActions } from "./reducers/authReducer";
 import { useEffect } from "react";
 function App() {
   const {user} = useSelector(authSelector);
-  const auth = getAuth(app);
+
   const dispatch = useDispatch();
   const {setUser} =authActions;
   
