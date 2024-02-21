@@ -3,8 +3,7 @@ import styles from "./ProductDetails.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar,faHeart } from '@fortawesome/free-solid-svg-icons'
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../contexts/authContext";
-import { useCart } from "../../contexts/CartContext";
+
 export const ProductDetails=()=>{
     //useEffect to get product from id
     const [product,setProduct] = useState({});
